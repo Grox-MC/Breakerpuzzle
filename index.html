@@ -11,31 +11,24 @@
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
+            overflow: hidden;
             user-select: none;
-            box-sizing: border-box;
         }
 
-        .top-bar {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .speedrun-timer, .knobs-display {
+        .speedrun-timer {
             font-size: 24px;
             color: #888;
+            margin-bottom: 15px;
             font-weight: bold;
             letter-spacing: 2px;
         }
-        .speedrun-timer span { color: #ff9d00; }
-        .knobs-display span { color: #5bc0be; }
+        .speedrun-timer span {
+            color: #ff9d00;
+        }
 
         .breaker-box {
             background: linear-gradient(135deg, #282828 0%, #1e1e1e 100%);
@@ -177,6 +170,11 @@
             transition: background-color 0.1s, box-shadow 0.1s;
         }
 
+        .status-light.active {
+            background-color: #ff9d00;
+            box-shadow: 0 0 8px #ff9d00, 0 0 2px #fff;
+        }
+
         .slider-housing {
             position: relative;
             width: 100%;
@@ -195,51 +193,21 @@
             top: 3px;
             bottom: 3px;
             width: 32px;
+            background: linear-gradient(to bottom, #777 0%, #444 100%);
+            border: 2px solid #555;
+            box-shadow: -3px 0 5px rgba(0,0,0,0.5), 3px 0 5px rgba(0,0,0,0.5);
             transition: left 0.1s ease-in-out;
             left: 4px;
         }
 
-        /* --- SKIN: DEFAULT --- */
-        .skin-default .lever {
-            background: linear-gradient(to bottom, #777 0%, #444 100%);
-            border: 2px solid #555;
-            box-shadow: -3px 0 5px rgba(0,0,0,0.5), 3px 0 5px rgba(0,0,0,0.5);
+        .slider-housing.on .lever {
+            left: calc(100% - 36px);
+            background: linear-gradient(to bottom, #999 0%, #555 100%);
         }
-        .skin-default.on .lever { left: calc(100% - 36px); background: linear-gradient(to bottom, #999 0%, #555 100%); }
-        .skin-default .status-light.active { background-color: #ff9d00; box-shadow: 0 0 8px #ff9d00, 0 0 2px #fff; }
 
-        /* --- SKIN: GOLD --- */
-        .skin-gold .lever {
-            background: linear-gradient(to bottom, #ffe066 0%, #b38f00 100%);
-            border: 2px solid #ffd700;
-            box-shadow: -3px 0 8px rgba(212,175,55,0.4), 3px 0 8px rgba(212,175,55,0.4);
+        .shake {
+            animation: shake-anim 0.2s ease-in-out;
         }
-        .skin-gold.on .lever { left: calc(100% - 36px); background: linear-gradient(to bottom, #fff3b3 0%, #d4af37 100%); }
-        .skin-gold .status-light.active { background-color: #ffe066; box-shadow: 0 0 10px #ffd700, 0 0 4px #fff; }
-
-        /* --- SKIN: LASER NEON --- */
-        .skin-laser .lever {
-            background: #050505;
-            border: 2px solid #00f2fe;
-            box-shadow: inset 0 0 6px #00f2fe;
-        }
-        .skin-laser.on .lever { left: calc(100% - 36px); background: #00f2fe; box-shadow: 0 0 10px #00f2fe; }
-        .skin-laser .status-light.active { background-color: #00f2fe; box-shadow: 0 0 12px #00f2fe; }
-
-        /* --- SKIN: CRUCIFIX --- */
-        .skin-crucifix .lever {
-            background: linear-gradient(to bottom, #5c4033 0%, #2b1d16 100%);
-            border: 2px solid #a3704c;
-            box-sizing: border-box;
-        }
-        .skin-crucifix::after {
-            content: '†'; position: absolute; left: 12px; top: 6px; color: rgba(0,213,255,0.2); font-weight: bold; font-size: 16px; transition: left 0.1s;
-        }
-        .skin-crucifix.on::after { left: calc(100% - 24px); color: rgba(0,213,255,0.8); text-shadow: 0 0 5px #00d5ff; }
-        .skin-crucifix.on .lever { left: calc(100% - 36px); background: linear-gradient(to bottom, #8b5a2b 0%, #4a2e1b 100%); }
-        .skin-crucifix .status-light.active { background-color: #00d5ff; box-shadow: 0 0 15px #00d5ff, 0 0 5px #fff; }
-
-        .shake { animation: shake-anim 0.2s ease-in-out; }
         @keyframes shake-anim {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-8px); }
@@ -260,67 +228,32 @@
             cursor: pointer;
             margin-top: 25px;
             box-shadow: 0 5px 0 #b09e7a, 0 8px 20px rgba(0,0,0,0.6);
-            transition: transform 0.05s, box-shadow 0.05s, background-color 0.2s;
+            transition: transform 0.05s, box-shadow 0.05s, background-color 0.2s, color 0.2s;
             text-align: center;
             box-sizing: border-box;
         }
-        .doors-start-btn:hover:not(:disabled) { background-color: #f5e7c8; }
-        .doors-start-btn:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 #b09e7a, 0 4px 10px rgba(0,0,0,0.6); }
-        .doors-start-btn:disabled { background-color: #222226; color: #44444a; box-shadow: 0 5px 0 #141416; cursor: not-allowed; transform: none; }
 
-        .shop-container {
-            margin-top: 30px;
-            width: 360px;
-            background-color: #141417;
-            border: 3px solid #222;
-            padding: 15px;
-            box-sizing: border-box;
-            border-radius: 4px;
+        .doors-start-btn:hover:not(:disabled) {
+            background-color: #f5e7c8;
         }
-        .shop-title {
-            font-family: sans-serif;
-            font-size: 14px;
-            text-transform: uppercase;
-            color: #888;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            border-bottom: 1px solid #222;
-            padding-bottom: 4px;
-            font-weight: bold;
+
+        .doors-start-btn:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #b09e7a, 0 4px 10px rgba(0,0,0,0.6);
         }
-        .skin-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 6px;
-            background: #1c1c22;
-            margin-bottom: 6px;
-            border-radius: 3px;
-            font-size: 13px;
+
+        .doors-start-btn:disabled {
+            background-color: #222226;
+            color: #44444a;
+            box-shadow: 0 5px 0 #141416;
+            cursor: not-allowed;
+            transform: none;
         }
-        .skin-name { font-weight: bold; }
-        .skin-btn {
-            background-color: #ebdcb9;
-            color: #1a1510;
-            border: none;
-            padding: 5px 10px;
-            font-size: 11px;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            border-radius: 2px;
-        }
-        .skin-btn.equipped { background-color: #5bc0be; color: #0b0b0d; cursor: default; }
-        .skin-btn.locked { background-color: #3a3530; color: #888; }
-        .skin-btn:hover:not(.equipped):not(.locked) { background-color: #f5e7c8; }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <div class="speedrun-timer">ZEIT: <span id="stopwatch">00:00.00</span></div>
-        <div class="knobs-display">KNOBS: <span id="knobs-val">0</span>🪙</div>
-    </div>
+    <div class="speedrun-timer">ZEIT: <span id="stopwatch">00:00.00</span></div>
 
     <div class="breaker-box" id="box">
         <div class="display">
@@ -337,15 +270,11 @@
         </div>
 
         <div class="progress-container" id="progress-container"></div>
+
         <div class="switches-grid" id="grid"></div>
     </div>
 
     <button class="doors-start-btn" id="start-btn" onclick="pressStartButton()">TRAINING STARTEN</button>
-
-    <div class="shop-container">
-        <div class="shop-title">Hebel-Skins Shop</div>
-        <div id="shop-list"></div>
-    </div>
 
 <script>
     const totalSwitches = 10;
@@ -365,18 +294,9 @@
     let gameActive = false;
 
     let currentActiveBars = 0; 
+
+    // Intervalle: R1 = 1s, R2 = 0.8s, R3 = 0.6s
     const speeds = { 1: 1000, 2: 800, 3: 600 }; 
-
-    let knobs = parseInt(localStorage.getItem('doors_knobs')) || 0;
-    let equippedSkin = localStorage.getItem('doors_equipped_skin') || 'default';
-    let ownedSkins = JSON.parse(localStorage.getItem('doors_owned_skins')) || ['default'];
-
-    const skinsData = [
-        { id: 'default', name: 'Standard', cost: 0 },
-        { id: 'gold', name: 'Pure Gold ✨', cost: 100 },
-        { id: 'laser', name: 'Laser Neon ⚡', cost: 250 },
-        { id: 'crucifix', name: 'Crucifix †', cost: 500 }
-    ];
 
     const box = document.getElementById('box');
     const numIndicator = document.getElementById('num-indicator');
@@ -403,72 +323,12 @@
                 <div class="switch-number">${idStr}</div>
                 <div class="status-light" id="light-${i}"></div>
             </div>
-            <div class="slider-housing skin-${equippedSkin}" id="housing-${i}" onclick="toggleLever(${i})">
+            <div class="slider-housing" id="housing-${i}" onclick="toggleLever(${i})">
                 <div class="lever" id="lever-${i}"></div>
             </div>
         `;
         grid.appendChild(slot);
         userPattern[i] = false;
-    }
-
-    function updateSaveData() {
-        localStorage.setItem('doors_knobs', knobs);
-        localStorage.setItem('doors_equipped_skin', equippedSkin);
-        localStorage.setItem('doors_owned_skins', JSON.stringify(ownedSkins));
-        document.getElementById('knobs-val').innerText = knobs;
-        renderShop();
-    }
-
-    function renderShop() {
-        const list = document.getElementById('shop-list');
-        list.innerHTML = '';
-        skinsData.forEach(skin => {
-            const item = document.createElement('div');
-            item.className = 'skin-item';
-            
-            let btnHtml = '';
-            if (equippedSkin === skin.id) {
-                btnHtml = `<button class="skin-btn equipped">Aktiviert</button>`;
-            } else if (ownedSkins.includes(skin.id)) {
-                btnHtml = `<button class="skin-btn" onclick="equipSkin('${skin.id}')">Nutzen</button>`;
-            } else {
-                if (knobs >= skin.cost) {
-                    btnHtml = `<button class="skin-btn" onclick="buySkin('${skin.id}', ${skin.cost})">${skin.cost} 🪙</button>`;
-                } else {
-                    btnHtml = `<button class="skin-btn locked">${skin.cost} 🪙</button>`;
-                }
-            }
-
-            item.innerHTML = `<span class="skin-name">${skin.name}</span>${btnHtml}`;
-            list.appendChild(item);
-        });
-    }
-
-    function buySkin(id, cost) {
-        if (knobs >= cost && !ownedSkins.includes(id)) {
-            knobs -= cost;
-            ownedSkins.push(id);
-            equippedSkin = id;
-            applySkinToGrid();
-            updateSaveData();
-        }
-    }
-
-    function equipSkin(id) {
-        if (ownedSkins.includes(id)) {
-            equippedSkin = id;
-            applySkinToGrid();
-            updateSaveData();
-        }
-    }
-
-    function applySkinToGrid() {
-        for (let i = 1; i <= totalSwitches; i++) {
-            const housing = document.getElementById(`housing-${i}`);
-            if (housing) {
-                housing.className = `slider-housing skin-${equippedSkin}` + (userPattern[i] ? ' on' : '');
-            }
-        }
     }
 
     function pressStartButton() {
@@ -495,8 +355,7 @@
     function resetAllLevers() {
         for(let i = 1; i <= totalSwitches; i++) {
             userPattern[i] = false;
-            const housing = document.getElementById(`housing-${i}`);
-            housing.classList.remove('on');
+            document.getElementById(`housing-${i}`).classList.remove('on');
             document.getElementById(`light-${i}`).classList.remove('active');
         }
     }
@@ -531,6 +390,7 @@
         }
 
         updateRoundDisplay();
+        
         runDisplayLoop();
         displayInterval = setInterval(runDisplayLoop, speeds[currentRound]);
     }
@@ -583,8 +443,6 @@
         }
 
         let stepsDelta = Math.abs(correctCount - currentActiveBars);
-        
-        // BUGFIX HIER: Animationszeit von 3000ms auf 2500ms reduziert!
         let stepDuration = stepsDelta > 0 ? (2500 / stepsDelta) : 2500;
 
         function stepAnimation() {
@@ -624,7 +482,7 @@
                     }
                     setTimeout(() => processRoundEndTransition(false), 1000);
                 }
-            }, 2500); // Ebenfalls hier angepasst
+            }, 2500);
         } else {
             stepAnimation();
         }
@@ -636,12 +494,7 @@
                 startRound(currentRound + 1);
             } else {
                 clearInterval(timerInterval);
-                
-                let reward = Math.floor(Math.random() * 21) + 30; 
-                knobs += reward;
-                updateSaveData();
-
-                alert(`Aufzug bereit! \nEndzeit: ${stopwatch.innerText}\n\nBelohnung: +${reward} Knobs 🪙!`);
+                alert(`Aufzug bereit! Endzeit: ${stopwatch.innerText}`);
                 resetGameComplete();
             }
         } else {
@@ -681,7 +534,6 @@
         currentActiveBars = 0;
         drawProgressBar(0);
         updateRoundDisplay();
-        updateSaveData(); 
     }
 
     function updateRoundDisplay() {
@@ -691,7 +543,7 @@
         document.getElementById('box-r3').className = 'round-box';
     }
 
-    updateSaveData();
+    updateRoundDisplay();
 </script>
 
 </body>
