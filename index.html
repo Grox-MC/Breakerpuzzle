@@ -460,47 +460,30 @@
             }
         }
 
-        let stepsDelta = Math.abs(correctCount - currentActiveBars);
+        // Der Balken füllt sich nur bis zur Anzahl der korrekten Hebel
+        let stepsDelta = correctCount; 
         let stepDuration = stepsDelta > 0 ? (2500 / stepsDelta) : 2500;
 
         function stepAnimation() {
             if (currentActiveBars === correctCount) {
+                // Auswertung fertig!
                 if (correctCount === totalSwitches) {
                     setTimeout(() => processRoundEndTransition(true), 1000);
                 } else {
-                    setTimeout(() => {
-                        if (currentActiveBars > 0) {
-                            currentActiveBars--;
-                            drawProgressBar(currentActiveBars);
-                        }
-                        setTimeout(() => processRoundEndTransition(false), 1000);
-                    }, 500);
+                    // Fehler gemacht: KEIN Runterrechnen mehr! Direkt umschalten.
+                    setTimeout(() => processRoundEndTransition(false), 1000);
                 }
                 return;
             }
 
-            if (currentActiveBars < correctCount) {
-                currentActiveBars++;
-            } else {
-                currentActiveBars--;
-            }
-
+            currentActiveBars++;
             drawProgressBar(currentActiveBars);
             setTimeout(stepAnimation, stepDuration);
         }
 
         if (stepsDelta === 0) {
-            setTimeout(() => {
-                if (correctCount === totalSwitches) {
-                    setTimeout(() => processRoundEndTransition(true), 1000);
-                } else {
-                    if (currentActiveBars > 0) {
-                        currentActiveBars--;
-                        drawProgressBar(currentActiveBars);
-                    }
-                    setTimeout(() => processRoundEndTransition(false), 1000);
-                }
-            }, 2500);
+            // Wenn 0 richtig waren, springt er gar nicht erst an
+            setTimeout(() => processRoundEndTransition(false), 1000);
         } else {
             stepAnimation();
         }
@@ -518,6 +501,11 @@
         } else {
             box.classList.add('shake');
             setTimeout(() => box.classList.remove('shake'), 200);
+            
+            // Setzt den Balken für den neuen Versuch direkt auf 0 zurück
+            currentActiveBars = 0;
+            drawProgressBar(0);
+            
             startRound(currentRound, true); 
         }
     }
